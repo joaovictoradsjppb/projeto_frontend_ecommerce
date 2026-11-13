@@ -1,16 +1,5 @@
-const botao = document.getElementById('menu');
-const botao1 = document.getElementById('menu1');
-const botao2 = document.getElementById('menu2');
-
-botao.addEventListener('click', () => {
-window.location.href = '';
+['menu', 'menu1', 'menu2'].forEach((id, i) => {
+    document.getElementById(id).addEventListener('click', () => {
+        window.location.href = ['', '', ''][i];
+    });
 });
-
-botao1.addEventListener('click', () => {
-window.location.href = '';
-});
-
-botao2.addEventListener('click', () => {
-window.location.href = '';
-});
-
