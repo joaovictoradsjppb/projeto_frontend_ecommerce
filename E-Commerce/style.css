@@ -12,18 +12,17 @@ header{
 .titulo{
     color: #efefef;
     border-bottom: 4px solid #613003;   
-    border-radius: 0 0 50px 10px;        
+    border-radius: 0 0 50px 10px; 
+    width: 280px;       
   }
 
 .container1{
     display: flex;
     flex-direction: row;
 }
-.container1 div{
-  width: 300px;
+.container1 div nav{
+  width: 400px;
 }
-
-
 
 #carrinho{
     
@@ -32,13 +31,10 @@ header{
 }
 .container2{
     display: flex;
-    gap: 30px;
     align-items: flex-start;
+    gap: 10px;
 }
 
-.container2 div{
-  width: 200px;
-}
 .container2 a{
     color: whitesmoke;
     text-align: center;
@@ -101,7 +97,7 @@ list-style-type: none;
 .carrossel{
     width: 400px;
     max-width: 95%;
-    height: 500px;
+    height: 400px;
     position: relative;
     overflow: hidden;
     border-radius: 10px;
@@ -119,11 +115,13 @@ list-style-type: none;
     width: 200%;
     height: 100%;
     margin-left: 100px;
+    display: flex;
+    gap: 150px;
 }
 
 .slide img{
     width: 100%;
-    height: 80%;
+    height: 90%;
     object-fit: cover;
 }
 
@@ -145,21 +143,20 @@ list-style-type: none;
 }
 
 .botao{
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
+    width: 30px;
+    height: 20px;
+    border-radius: 10px;
     cursor: pointer;
-    background-color: black;
     transition: background-color 0.3s;
 }
 
 .botao:hover{
-    background-color: #6c3c0c;
+    background-color: #7f7f7e;
 }
 
 #slide1:checked ~ .navegacao label[for="slide1"],
 #slide1:checked ~ .navegacao label[for="slide2"]{
-    background-color: #a94b00;
+    background-color: rgb(90, 88, 88);
 }
 
 
