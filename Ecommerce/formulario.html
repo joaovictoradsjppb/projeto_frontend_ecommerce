@@ -36,19 +36,20 @@
                 </div>
             </nav>
         </div>
-        <input type="text" id="nome" name="nome" placeholder="Pesquisar" />
 
     </header>
-    
+    <hr class="linha">
 
     <section id="form">
         <div>
         <form>
+            <h1>Entrar</h1>
                 <label>E-mail</label><br>
                 <input type="email" name="email" placeholder="Digite seu Email" class="formulario" required><br>
                 <label>Senha</label><br>
                 <input type="password" name="senha" placeholder="Digite sua senha" class="formulario" required><br>
         </form>
+        <button type="submit">Entrar</button>
         </div>
         <div>
             <form action="obrigado.html" method="get">
@@ -62,20 +63,20 @@
                 <label>Telefone</label><br>
                 <input type="number" max="99999999999" placeholder="Telefone" name="telefone" class="formulario"
                     required><br>
-                <label>Idade</label><br>
-                <input type="number" placeholder="Idade" name="idade" class="formulario" required>
-                <br>
-                <label>Selecione seu curso</label>
-                <br>
-                <select name="curso" class="formulario">
-                    <option disabled selected>Selecione na Lista</option>
-                    <option value="ADS">ADS</option>
-                    <option value="computação">Computação</option>
-                    <option value="medicina">Medicina</option>
-                    <option value="administração">Administração</option>
-                    <option value="nada">Ainda não decidi</option>
+                <label for="nascimento">Data de nascimento</label><br>
+<input type="date" id="nascimento" name="nascimento" class="formulario" required>
+<br>
+                
+                <label>Sexo</label><br>
+                <select name="sexo" class="formulario" required>
+                    <option value="">Selecione</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="outro">Outro</option>
+                
                 </select>
                 <br>
+                <button type="submit">Cadastrar</button>
             </form>
         </div>
     </section>
