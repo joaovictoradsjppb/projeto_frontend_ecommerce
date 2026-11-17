@@ -1,0 +1,218 @@
+body {
+    background-color: whitesmoke;
+    margin: 0px;
+}
+
+header {
+    top: 0;
+    z-index: 1000;
+    position: sticky;
+    white-space: nowrap;
+    background: rgb(245, 226, 205);
+    padding: 2px;
+    width: 100%;
+    height: auto;
+}
+
+.titulo {
+    color: #c86202;
+    border-bottom: 4px solid #c86202;
+    border-radius: 0 0 50px 10px;
+    width: 300px;
+}
+.formulariodepesquisa {
+    text-align: center;
+    border: solid;
+    border-radius: 5px;
+    border-color: #a94b00;
+    width: 400px;
+    margin-left: 40px;
+}
+
+.container1 {
+    display: flex;
+    flex-direction: row;
+}
+
+.container1 div nav {
+    width: 200px;
+}
+
+#carrinho {
+    margin-left: 750px;
+    width: 60px;
+    height: 60px;
+}
+
+.container2 {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.container2 a {
+    color: #c86202;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.container2 a:hover {
+    background-color: #c86202;
+    color: rgb(245, 226, 205);
+}
+
+.container3 {
+    margin-top: 20px;
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container3 div {
+    max-height: 300px;
+    min-height: 300px;
+    width: 300px;
+}
+
+/* Aqui colocamos o menu suspenso de produtos */
+
+.menu-suspenso {
+    position: relative;
+    display: inline-block;
+}
+
+.botao-menu {
+    background-image: linear-gradient(#a94b00, #6c3c0c);
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.botao-menu:hover {
+    color: #f37805;
+}
+
+/* Lista de links escondidos */
+
+.lista-links {
+    display: none;
+    position: absolute;
+    background-color: #ffff;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px black;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 0;
+}
+
+.lista-links a {
+    color: black;
+}
+
+.lista-links li a:hover {
+    color: #fff;
+    background-color: #a94b00;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.menu-suspenso:hover .lista-links {
+    display: block;
+}
+
+/* Carrossel de imegem */
+.container4 {
+    display: flex;
+    
+}
+
+.carrossel {
+    position: relative;
+    width: 400px;
+    max-width: 100%;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.carrossel h3 {
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.slide {
+    display: none;
+    /* todos escondidos */
+    text-align: center;
+}
+
+.slide.ativo {
+    display: block;
+    /* só o ativo aparece */
+}
+
+.slide img {
+    width: 400px;
+    height: 400px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: black;
+    color: white;
+    border: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.prev {
+    left: 10px
+}
+
+.next {
+    right: 10px
+}
+
+/* Classe da linha */
+.linha {
+    border: none;
+    height: 2px;
+    background-color: #c86202;
+}
+
+/* formulario */
+.formulario {
+    text-align: center;
+    border: solid;
+    border-radius: 5px;
+    border-color: #a94b00;
+    width: 400px;
+}
+
+#form {
+    gap: 300px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    
+}
+
+.preçoanterior {
+    color: red;
+}
