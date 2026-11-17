@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cozinha Moderna</title>
   <link rel="stylesheet" href="style.css">
- 
+   <script src="script.js" defer></script>
 </head>
 <body>
   <header class="topo">
@@ -42,16 +42,42 @@
   <div class="modal" id="modal" aria-hidden="true">
     <div class="modal-conteudo">
       <button class="fechar" id="fecharModal" aria-label="Fechar">✕</button>
-      <div class="galeria">
-        <div class="imagem-grande" id="imgGrande"></div>
-        <div class="miniaturas" id="miniaturas"></div>
+
+      <div class="pd">
+        <div class="pd-galeria">
+          <span class="pd-selo" id="pdSelo"></span>
+          <div class="pd-foto" id="pdFoto"></div>
+          <div class="pd-thumbs" id="pdThumbs"></div>
+        </div>
+
+        <div class="pd-compra">
+          <h2 id="pdNome"></h2>
+          <p class="pd-de" id="pdDe"></p>
+          <p class="pd-por" id="pdPor"></p>
+          <p class="pd-parcelas" id="pdParcelas"></p>
+          <p class="pd-pix" id="pdPix"></p>
+
+          <p class="pd-rotulo">Selecione a voltagem:</p>
+          <div class="pd-opcoes" id="pdVolt">
+            <button class="pd-opcao" data-v="127V">127V</button>
+            <button class="pd-opcao ativa" data-v="220V">220V</button>
+          </div>
+
+          <p class="pd-rotulo">Quantidade:</p>
+          <div class="pd-qtd">
+            <button id="pdMenos">−</button><span id="pdQtd">1</span><button id="pdMais">+</button>
+          </div>
+
+          <button class="btn pd-comprar" id="pdComprar">COMPRAR</button>
+        </div>
       </div>
-      <div class="info">
-        <h2 id="mNome"></h2>
-        <p class="preco-grande" id="mPreco"></p>
-        <p id="mDesc"></p>
-        <ul id="mSpecs"></ul>
-        <button class="btn" id="mAdd">Adicionar ao carrinho</button>
+
+      <div class="pd-abas">
+        <div class="pd-abas-menu" id="pdAbasMenu">
+          <button class="ativa" data-aba="desc">Descrição</button>
+          <button data-aba="specs">Especificações</button>
+        </div>
+        <div class="pd-aba" id="pdAba"></div>
       </div>
     </div>
   </div>
@@ -68,6 +94,9 @@
   </aside>
   <div class="fundo" id="fundo"></div>
 
-  <script src="script.js"></script>
+  <footer class="rodape">
+    <p>&copy; 2024 Cozinha Moderna. Todos os direitos reservados.</p>
+  </footer>
+
 </body>
 </html>
