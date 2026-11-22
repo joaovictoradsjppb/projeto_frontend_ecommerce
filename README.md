@@ -1,3 +1,15 @@
 # projeto_frontend_ecommerce
-E-Commerce de vendas de utensílios domésticos para cozinha.
-Desenvolver uma aplicação web front-end para controle de vendas online de produtos destinados a cozinha. Sua cozinha mais estilosa e mas bonita com os nossos produtos.
+#Cozinha Moderna
+
+Sua cozinha mais estilosa e mais bonita com os nossos produtos.
+
+## Sobre o projeto
+Loja virtual de utensílios de cozinha, desenvolvida como aplicação web front-end.
+
+## Funcionalidades
+- Catálogo de produtos
+- Carrinho de compras
+- Cadastro em nossa loja
+
+## Tecnologias
+- HTML, CSS e JavaScript
