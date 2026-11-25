@@ -5,25 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cadastre-se | Cozinha Moderna</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    a.carrinho { text-decoration: none; color: inherit; }
-    .cadastro { max-width: 560px; margin: 0 auto 60px; padding: 0 5%; }
-    .cadastro form { background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
-    .campo { margin-bottom: 16px; }
-    .campo label { display: block; font-weight: 600; margin-bottom: 6px; }
-    .campo input[type="text"], .campo input[type="email"], .campo input[type="tel"], .campo input[type="password"] {
-      width: 100%; padding: 12px; font-size: 1rem; border: 2px solid #d8cdc2; border-radius: 10px; background: #fff; font-family: inherit; color: inherit;
-    }
-    .cadastro form { transition: box-shadow .25s; }
-    .cadastro form:hover { box-shadow: 0 14px 28px rgba(108,60,12,.2); }
-    .campo input:focus { outline: none; border-color: var(--marrom); }
-    .campo.erro input { border-color: #c0392b; }
-    .msg-erro { color: #c0392b; font-size: .85rem; margin-top: 4px; min-height: 1em; }
-    .linha { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
-    .termos { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; }
-    .sucesso { display: none; background: #e6f4ea; color: #0b5d4b; padding: 14px; border-radius: 10px; margin-bottom: 16px; font-weight: 600; }
-    @media (max-width: 600px) { .linha { grid-template-columns: 1fr; } }
-  </style>
 </head>
 <body>
   <header class="topo">
@@ -41,7 +22,7 @@
     </nav>
   </header>
 
-  <section class="banner" style="padding-bottom:24px">
+  <section class="banner banner-cadastro">
     <h2>Crie sua conta</h2>
     <p>Cadastre-se para comprar mais rápido e receber ofertas.</p>
   </section>
@@ -92,7 +73,7 @@
       <label class="termos"><input type="checkbox" id="termos"> Aceito os termos de uso</label>
       <p class="msg-erro" id="erroTermos"></p>
 
-      <button type="submit" class="btn btn-full" style="width:100%">Cadastrar</button>
+      <button type="submit" class="btn btn-full">Cadastrar</button>
     </form>
   </main>
 
@@ -100,78 +81,6 @@
     <p>&copy; 2024 Cozinha Moderna. Todos os direitos reservados.</p>
   </footer>
 
-  <script>
-    const $ = (id) => document.getElementById(id);
-
-    /* Contador do carrinho (mesmo carrinho da loja) */
-    try {
-      const c = JSON.parse(localStorage.getItem("carrinho") || "[]");
-      $("contador").textContent = c.reduce((s, i) => s + i.qtd, 0);
-    } catch (x) {}
-
-    /* Máscaras */
-    $("cpf").addEventListener("input", (e) => {
-      let v = e.target.value.replace(/\D/g, "").slice(0, 11);
-      v = v.replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-      e.target.value = v;
-    });
-    $("telefone").addEventListener("input", (e) => {
-      let v = e.target.value.replace(/\D/g, "").slice(0, 11);
-      v = v.replace(/^(\d{2})(\d)/, "($1) $2").replace(/(\d{5})(\d{1,4})$/, "$1-$2");
-      e.target.value = v;
-    });
-
-    /* Validação de CPF (dígitos verificadores) */
-    function cpfValido(cpf) {
-      cpf = cpf.replace(/\D/g, "");
-      if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
-      for (const t of [9, 10]) {
-        let soma = 0;
-        for (let i = 0; i < t; i++) soma += Number(cpf[i]) * (t + 1 - i);
-        const d = ((soma * 10) % 11) % 10;
-        if (d !== Number(cpf[t])) return false;
-      }
-      return true;
-    }
-
-    function erro(id, mensagem) {
-      const campo = $(id).closest(".campo");
-      campo.classList.toggle("erro", !!mensagem);
-      campo.querySelector(".msg-erro").textContent = mensagem;
-      return !mensagem;
-    }
-
-    $("formCadastro").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const nome = $("nome").value.trim();
-      const email = $("email").value.trim();
-      const tel = $("telefone").value.replace(/\D/g, "");
-      const senha = $("senha").value;
-
-      const ok = [
-        erro("nome", nome.split(/\s+/).length >= 2 && nome.length >= 5 ? "" : "Digite nome e sobrenome."),
-        erro("email", /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? "" : "Digite um e-mail válido."),
-        erro("cpf", cpfValido($("cpf").value) ? "" : "CPF inválido."),
-        erro("telefone", tel.length >= 10 ? "" : "Digite um telefone com DDD."),
-        erro("senha", senha.length >= 6 ? "" : "A senha precisa ter pelo menos 6 caracteres."),
-        erro("senha2", senha === $("senha2").value && $("senha2").value ? "" : "As senhas não são iguais.")
-      ].every(Boolean);
-
-      const termosOk = $("termos").checked;
-      $("erroTermos").textContent = termosOk ? "" : "Você precisa aceitar os termos.";
-      if (!ok || !termosOk) return;
-
-      // Salva no navegador (a senha NÃO é guardada, por segurança)
-      let usuarios = [];
-      try { usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]"); } catch (x) { usuarios = []; }
-      if (usuarios.some(u => u.email === email)) { erro("email", "Este e-mail já está cadastrado."); return; }
-      usuarios.push({ nome, email, cpf: $("cpf").value, telefone: $("telefone").value });
-      localStorage.setItem("usuarios", JSON.stringify(usuarios));
-
-      $("sucesso").style.display = "block";
-      $("formCadastro").reset();
-      setTimeout(() => { window.location.href = "index.html"; }, 2000);
-    });
-  </script>
+  <script src="cadastro.js"></script>
 </body>
 </html>
