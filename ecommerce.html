@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cozinha Moderna</title>
+  <link rel="stylesheet" href="style.css">
+   <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topo">
+    <div class="topo-linha">
+      <div>
+        <h1>Cozinha Moderna</h1>
+        <p class="slogan">Sua cozinha organizada e eficaz.</p>
+      </div>
+      <button class="carrinho" id="btnCarrinho" aria-label="Abrir carrinho">
+        🛒 <span id="contador">0</span>
+      </button>
+    </div>
+    <nav class="menu">
+      <a href="#inicio" class="ativo">Início</a>
+      <a href="#produtos">Produtos</a>
+      <a href="cadastro.html">Cadastre-se</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="inicio" class="banner">
+      <h2>Tudo para uma cozinha prática</h2>
+      <p>Escolha seus eletros favoritos e finalize em poucos cliques.</p>
+      <a href="#produtos" class="btn">Ver produtos</a>
+    </section>
+
+    <section id="produtos">
+      <h2 class="titulo-secao">Nossos produtos</h2>
+      <div class="grade" id="grade"></div>
+    </section>
+  </main>
+
+  <!-- Detalhe do produto (tela cheia) -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-conteudo">
+      <button class="fechar" id="fecharModal" aria-label="Fechar">✕</button>
+
+      <div class="pd">
+        <div class="pd-galeria">
+          <span class="pd-selo" id="pdSelo"></span>
+          <div class="pd-foto" id="pdFoto"></div>
+          <div class="pd-thumbs" id="pdThumbs"></div>
+        </div>
+
+        <div class="pd-compra">
+          <h2 id="pdNome"></h2>
+          <p class="pd-de" id="pdDe"></p>
+          <p class="pd-por" id="pdPor"></p>
+          <p class="pd-parcelas" id="pdParcelas"></p>
+          <p class="pd-pix" id="pdPix"></p>
+
+          <p class="pd-rotulo">Selecione a voltagem:</p>
+          <div class="pd-opcoes" id="pdVolt">
+            <button class="pd-opcao" data-v="127V">127V</button>
+            <button class="pd-opcao ativa" data-v="220V">220V</button>
+          </div>
+
+          <p class="pd-rotulo">Quantidade:</p>
+          <div class="pd-qtd">
+            <button id="pdMenos">−</button><span id="pdQtd">1</span><button id="pdMais">+</button>
+          </div>
+
+          <button class="btn pd-comprar" id="pdComprar">COMPRAR</button>
+        </div>
+      </div>
+
+      <div class="pd-abas">
+        <div class="pd-abas-menu" id="pdAbasMenu">
+          <button class="ativa" data-aba="desc">Descrição</button>
+          <button data-aba="specs">Especificações</button>
+        </div>
+        <div class="pd-aba" id="pdAba"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carrinho lateral -->
+  <aside class="carrinho-painel" id="painel">
+    <div class="painel-topo">
+      <h3>Seu carrinho</h3>
+      <button class="fechar" id="fecharPainel" aria-label="Fechar carrinho">✕</button>
+    </div>
+    <ul id="itens"></ul>
+    <p class="total">Total: <strong id="total">R$ 0,00</strong></p>
+    <a href="pagamento.html" class="btn btn-full" id="finalizar">Finalizar compra</a>
+  </aside>
+  <div class="fundo" id="fundo"></div>
+
+  <footer class="rodape">
+    <p>&copy; 2024 Cozinha Moderna. Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+</html>
