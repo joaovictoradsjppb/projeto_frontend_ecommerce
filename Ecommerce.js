@@ -1,3 +1,4 @@
+/* ========== 1. DADOS ========== */
 const produtos = [
   { id: 1, nome: "Panela Elétrica", preco: 249.9, antigo: 297.5,
     imagens: ["imagens/panela-eletrica-frente.webp", "imagens/panela-eletrica-costas.webp", "imagens/panela-eletrica-medidas.webp"],
@@ -17,170 +18,156 @@ const produtos = [
     specs: ["Capacidade: 4 litros", "Potência: 1500 W", "Temperatura até 200°C", "Timer de 60 min"] }
 ];
 
-const $ = (id) => document.getElementById(id);
+/* ========== 2. FUNÇÕES AUXILIARES E VARIÁVEIS ========== */
+const $ = (id) => document.getElementById(id);                       // atalho para achar elementos
 const moeda = (v) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-// Liga um evento só se o elemento existir (evita travar o site)
-function on(id, evento, fn) {
-  const el = $(id);
-  if (el) el.addEventListener(evento, fn);
-  else console.warn("Elemento não encontrado no index.html: #" + id);
-}
-function texto(id, valor) { const el = $(id); if (el) el.textContent = valor; }
-function html(id, valor) { const el = $(id); if (el) el.innerHTML = valor; }
 
-const RESERVA = "data:image/svg+xml;utf8," + encodeURIComponent(
-  "<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><rect width='300' height='300' fill='#e3d9cf'/><text x='150' y='155' font-size='18' text-anchor='middle' fill='#6c3c0c' font-family='Arial'>Sem imagem</text></svg>"
-);
-function img(src, alt, classe = "") {
-  return `<img src="${src}" alt="${alt}" class="${classe}" onerror="this.onerror=null;this.src='${RESERVA}'">`;
-}
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];   // carrinho salvo no navegador
+let atual = null;   // produto aberto no modal
+let qtdModal = 1;   // quantidade escolhida no modal
 
-let carrinho = [];
-try { carrinho = JSON.parse(localStorage.getItem("carrinho") || "[]"); } catch (e) { carrinho = []; }
-carrinho = carrinho.filter(i => produtos.some(p => p.id === i.id)); // ignora itens antigos inválidos
-let atual = null;
-let qtdModal = 1;
+/* ========== 3. LISTA DE PRODUTOS ========== */
+$("grade").innerHTML = produtos.map(p => `
+  <article class="card" data-id="${p.id}">
+    <img src="${p.imagens[0]}" alt="${p.nome}">
+    <h3>${p.nome}</h3>
+    <p class="preco">${moeda(p.preco)}</p>
+    <button class="btn" data-add="${p.id}">Adicionar</button>
+  </article>`).join("");
 
-/* ---------- Produtos (desenhados primeiro) ---------- */
-function renderProdutos() {
-  html("grade", produtos.map(p => `
-    <article class="card" data-id="${p.id}">
-      ${img(p.imagens[0], p.nome)}
-      <h3>${p.nome}</h3>
-      <p class="preco">${moeda(p.preco)}</p>
-      <button class="btn" data-add="${p.id}">Adicionar</button>
-    </article>`).join(""));
-}
-renderProdutos();
-
-on("grade", "click", (e) => {
-  const add = e.target.closest("[data-add]");
-  if (add) { adicionar(Number(add.dataset.add)); return; }
+// Um único "click" na grade: botão adiciona ao carrinho, resto do card abre o modal
+$("grade").addEventListener("click", (e) => {
+  const botao = e.target.closest("[data-add]");
+  if (botao) return adicionar(Number(botao.dataset.add));
   const card = e.target.closest(".card");
   if (card) abrirModal(Number(card.dataset.id));
 });
 
-/* ---------- Modal ---------- */
-function mostrarVista(i) {
-  html("pdFoto", img(atual.imagens[i], atual.nome));
-  const thumbs = $("pdThumbs");
-  if (thumbs) [...thumbs.children].forEach((b, j) => b.classList.toggle("ativa", i === j));
-}
-function mostrarAba(nome) {
-  html("pdAba", nome === "desc"
-    ? `<p>${atual.desc}</p>`
-    : `<ul>${atual.specs.map(s => `<li>${s}</li>`).join("")}</ul>`);
-  document.querySelectorAll("#pdAbasMenu button")
-    .forEach(b => b.classList.toggle("ativa", b.dataset.aba === nome));
-}
+/* ========== 4. MODAL DO PRODUTO ========== */
 function abrirModal(id) {
   atual = produtos.find(p => p.id === id);
   qtdModal = 1;
-  texto("pdQtd", 1);
-  texto("pdSelo", Math.round((1 - atual.preco / atual.antigo) * 100) + "% OFF");
-  texto("pdNome", atual.nome);
-  texto("pdDe", "De " + moeda(atual.antigo));
-  texto("pdPor", moeda(atual.preco));
-  texto("pdParcelas", `ou 10x de ${moeda(atual.preco / 10)} sem juros`);
-  texto("pdPix", `${moeda(atual.preco * 0.95)} à vista no Pix (5% de desconto)`);
-  html("pdThumbs", atual.imagens
-    .map((s, i) => `<button data-i="${i}">${img(s, "Vista " + (i + 1))}</button>`).join(""));
-  mostrarVista(0);
+
+  $("pdQtd").textContent = 1;
+  $("pdSelo").textContent = Math.round((1 - atual.preco / atual.antigo) * 100) + "% OFF";
+  $("pdNome").textContent = atual.nome;
+  $("pdDe").textContent = "De " + moeda(atual.antigo);
+  $("pdPor").textContent = moeda(atual.preco);
+  $("pdParcelas").textContent = `ou 10x de ${moeda(atual.preco / 10)} sem juros`;
+  $("pdPix").textContent = `${moeda(atual.preco * 0.95)} à vista no Pix (5% de desconto)`;
+
+  $("pdThumbs").innerHTML = atual.imagens
+    .map((src, i) => `<button data-i="${i}"><img src="${src}" alt="Vista ${i + 1}"></button>`).join("");
+  mostrarFoto(0);
   mostrarAba("desc");
+
   $("modal").classList.add("aberto");
-  document.body.style.overflow = "hidden";
-}
-function fecharModal() {
-  const m = $("modal");
-  if (m) m.classList.remove("aberto");
-  document.body.style.overflow = "";
 }
 
-on("fecharModal", "click", fecharModal);
-on("pdThumbs", "click", (e) => {
+function fecharModal() {
+  $("modal").classList.remove("aberto");
+}
+
+function mostrarFoto(i) {
+  $("pdFoto").innerHTML = `<img src="${atual.imagens[i]}" alt="${atual.nome}">`;
+  [...$("pdThumbs").children].forEach((b, j) => b.classList.toggle("ativa", i === j));
+}
+
+function mostrarAba(nome) {
+  $("pdAba").innerHTML = nome === "desc"
+    ? `<p>${atual.desc}</p>`
+    : `<ul>${atual.specs.map(s => `<li>${s}</li>`).join("")}</ul>`;
+  document.querySelectorAll("#pdAbasMenu button")
+    .forEach(b => b.classList.toggle("ativa", b.dataset.aba === nome));
+}
+
+$("fecharModal").addEventListener("click", fecharModal);
+$("pdThumbs").addEventListener("click", (e) => {
   const b = e.target.closest("[data-i]");
-  if (b) mostrarVista(Number(b.dataset.i));
+  if (b) mostrarFoto(Number(b.dataset.i));
 });
-on("pdAbasMenu", "click", (e) => {
+$("pdAbasMenu").addEventListener("click", (e) => {
   const b = e.target.closest("[data-aba]");
   if (b) mostrarAba(b.dataset.aba);
 });
-on("pdVolt", "click", (e) => {
+$("pdVolt").addEventListener("click", (e) => {   // escolher voltagem
   const b = e.target.closest(".pd-opcao");
   if (!b) return;
   document.querySelectorAll(".pd-opcao").forEach(x => x.classList.remove("ativa"));
   b.classList.add("ativa");
 });
-on("pdMenos", "click", () => { qtdModal = Math.max(1, qtdModal - 1); texto("pdQtd", qtdModal); });
-on("pdMais", "click", () => { qtdModal++; texto("pdQtd", qtdModal); });
-on("pdComprar", "click", () => { adicionar(atual.id, qtdModal); fecharModal(); abrirPainel(); });
+$("pdMenos").addEventListener("click", () => { qtdModal = Math.max(1, qtdModal - 1); $("pdQtd").textContent = qtdModal; });
+$("pdMais").addEventListener("click", () => { qtdModal++; $("pdQtd").textContent = qtdModal; });
+$("pdComprar").addEventListener("click", () => { adicionar(atual.id, qtdModal); fecharModal(); abrirPainel(); });
 
+/* ========== 5. CARRINHO ========== */
+function adicionar(id, n = 1) {
+  const item = carrinho.find(i => i.id === id);
+  if (item) item.qtd += n;
+  else carrinho.push({ id, qtd: n });
+  mostrarCarrinho();
+}
+
+function alterar(id, delta) {
+  carrinho.find(i => i.id === id).qtd += delta;
+  carrinho = carrinho.filter(i => i.qtd > 0);   // remove itens com quantidade zero
+  mostrarCarrinho();
+}
+
+function mostrarCarrinho() {
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+  let qtdTotal = 0, total = 0;
+  carrinho.forEach(i => {
+    qtdTotal += i.qtd;
+    total += i.qtd * produtos.find(p => p.id === i.id).preco;
+  });
+  $("contador").textContent = qtdTotal;
+  $("total").textContent = moeda(total);
+
+  $("itens").innerHTML = carrinho.length
+    ? carrinho.map(i => {
+        const p = produtos.find(x => x.id === i.id);
+        return `<li>
+          <span><img class="mini" src="${p.imagens[0]}" alt=""> ${p.nome}<br><small>${moeda(p.preco)}</small></span>
+          <span><button data-id="${p.id}" data-delta="-1">−</button> ${i.qtd} <button data-id="${p.id}" data-delta="1">+</button></span>
+        </li>`;
+      }).join("")
+    : `<li class="vazio">Seu carrinho está vazio</li>`;
+}
+
+$("itens").addEventListener("click", (e) => {
+  if (e.target.dataset.id) alterar(Number(e.target.dataset.id), Number(e.target.dataset.delta));
+});
+
+function abrirPainel() {
+  $("painel").classList.add("aberto");
+  $("fundo").classList.add("aberto");
+}
+function fecharPainel() {
+  $("painel").classList.remove("aberto");
+  $("fundo").classList.remove("aberto");
+}
+
+$("btnCarrinho").addEventListener("click", abrirPainel);
+$("fecharPainel").addEventListener("click", fecharPainel);
+$("fundo").addEventListener("click", fecharPainel);
+$("finalizar").addEventListener("click", (e) => {
+  if (!carrinho.length) { e.preventDefault(); alert("Adicione um produto antes de finalizar."); }
+});
+
+/* ========== 6. EXTRAS ========== */
+// Tecla ESC fecha modal e carrinho
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") { fecharModal(); fecharPainel(); }
 });
 
-/* ---------- Carrinho ---------- */
-function salvar() { localStorage.setItem("carrinho", JSON.stringify(carrinho)); }
-
-function adicionar(id, n = 1) {
-  const item = carrinho.find(i => i.id === id);
-  item ? (item.qtd += n) : carrinho.push({ id, qtd: n });
-  renderCarrinho();
-  const c = $("btnCarrinho");
-  if (c) c.animate(
-    [{ transform: "scale(1)" }, { transform: "scale(1.25)" }, { transform: "scale(1)" }],
-    { duration: 300 });
-}
-function alterar(id, delta) {
-  const item = carrinho.find(i => i.id === id);
-  item.qtd += delta;
-  carrinho = carrinho.filter(i => i.qtd > 0);
-  renderCarrinho();
-}
-function renderCarrinho() {
-  salvar();
-  const qtdTotal = carrinho.reduce((s, i) => s + i.qtd, 0);
-  const total = carrinho.reduce((s, i) => s + i.qtd * produtos.find(p => p.id === i.id).preco, 0);
-  texto("contador", qtdTotal);
-  texto("total", moeda(total));
-  html("itens", carrinho.length
-    ? carrinho.map(i => {
-        const p = produtos.find(x => x.id === i.id);
-        return `<li>
-          <span>${img(p.imagens[0], "", "mini")} ${p.nome}<br><small>${moeda(p.preco)}</small></span>
-          <span><button data-m="${p.id}">−</button> ${i.qtd} <button data-p="${p.id}">+</button></span>
-        </li>`;
-      }).join("")
-    : `<li class="vazio">Seu carrinho está vazio</li>`);
-}
-on("itens", "click", (e) => {
-  if (e.target.dataset.m) alterar(Number(e.target.dataset.m), -1);
-  if (e.target.dataset.p) alterar(Number(e.target.dataset.p), 1);
-});
-
-function abrirPainel() {
-  const p = $("painel"), f = $("fundo");
-  if (p) p.classList.add("aberto");
-  if (f) f.classList.add("aberto");
-}
-function fecharPainel() {
-  const p = $("painel"), f = $("fundo");
-  if (p) p.classList.remove("aberto");
-  if (f) f.classList.remove("aberto");
-}
-on("btnCarrinho", "click", abrirPainel);
-on("fecharPainel", "click", fecharPainel);
-on("fundo", "click", fecharPainel);
-on("finalizar", "click", (e) => {
-  if (!carrinho.length) { e.preventDefault(); alert("Adicione um produto antes de finalizar."); }
-});
-
-/* ---------- Menu ativo ao clicar ---------- */
-document.querySelectorAll(".menu a[href^='#']").forEach(a => {
+// Marca o item do menu que foi clicado
+document.querySelectorAll(".menu a").forEach(a => {
   a.addEventListener("click", () => {
     document.querySelectorAll(".menu a").forEach(x => x.classList.remove("ativo"));
     a.classList.add("ativo");
   });
 });
 
-renderCarrinho();
+mostrarCarrinho();   // desenha o carrinho ao abrir a página
