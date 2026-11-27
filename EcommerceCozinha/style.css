@@ -1,0 +1,260 @@
+body {
+    font-family: sans-serif;
+    background-color:#fff;
+    margin: 0px;
+    width: 100%;
+    max-wdith: 100%;
+    overflow-x: hidden;
+}
+
+header {
+    background-color: #E9E0D3;
+    padding: 2px;
+    width: 100%;
+    position: sticky;
+    z-index: 1000;
+}
+
+.titulo {
+    color: #613003;
+    border-bottom: 4px solid #613003;
+    border-radius: 0 0 50px 10px;
+    text-align: left;
+}
+
+.container1 {
+    display: flex;
+    flex-direction: row;
+}/*Esse container está principalmente envolvido com o título que se encontra no header*/
+
+.container1 div {
+    width: 300px;
+}
+
+.container2 {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}/*O container 2 está diretamente envolvido no menu com os tres links do header*/
+
+.container2 div {
+    width: 200px;
+}
+
+.menu {
+    color: #613003;
+    text-align: center;
+    display: inline-block;
+}/*Esta classe está contida nos três links do menu*/
+
+.menu:hover {
+    background-color: #613003;
+    color: #E9E0D3;
+}/*Esta classe está envolvendo os links escondidos no link produtos no menu*/
+
+.lista-links {
+    display: none;
+    position: absolute;
+    background-color: #ffff;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px black;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 0;
+} /*Essa classe diz as características contidas na lista de produtos*/
+
+.lista-links a {
+    color: black;
+}/* Aqui vai definir as características contidas nos links que estão no menu de produtos*/
+
+.lista-links li a:hover {
+    color: #fff;
+    background-color: #a94b00;
+}/*Aqui teremos as características contidas quando o mouse passar por cima dos links que estão dentro da lista de produtos.*/
+
+ul {
+    list-style-type: none;
+}/*Esse aqui retira os pontos da lateral de cada item da lista*/
+
+.menu-suspenso:hover .lista-links {
+    display: block;
+}
+
+.botao{
+    max-height: 20px;
+    top: 20px;
+    right: 20px;
+    background-color: #613003;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}/*Essa classe faz as características do carrinho de compras*/
+
+#lista-itens{
+    list-style: none; /*retira os pontos da list*/
+    padding: 0; /*Retira o recuo esquerdo dos elementos da lista*/
+}
+
+#lista-itens li{
+    display: flex;
+    align-items: center;
+}
+
+
+.container3 {
+    margin-left: 600px;
+    text-align: center;
+    border-radius: 100px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+}/*Aqui está contido o carrinho de compras. Flex-end, joga os elemntos para direita*/
+
+.container4 {
+    margin-top: 57px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.container4 div {
+    width: 100%;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 1px 1px 1px 1px #613003;
+    border-radius: 10px;
+}
+
+.container4 div:hover{
+    transform: translateY(-8px);
+    box-shadow: -2px 2px 2px 2px #141313;
+}
+
+.preco-antigo{
+    color: #c2070a;
+}
+
+.btn-prod{
+    top: 20px;
+    right: 20px;
+    background-color: #613003;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+    margin: 10px;
+}/*Essa classe descreve os botões do site*/
+
+.tabela{
+    position: fixed;
+    top: 0;
+    left: -320px;
+    width: 300px;
+    height: 100%;
+    background-color: #E9E0D3;
+    box-shadow: -2px 5px 12px  #613003;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: right 0.3s ease;
+    z-index: 1010;
+}/*Essa classe descreve as tabelas dos produtos*/
+
+
+.tabela.aparecer{
+    left: 0px;
+}
+
+.descricao{
+    color: #613003;
+}
+.descricao hr{
+    border: solid #613003;
+}
+.gaveta-carrinho{
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    height: 100%;
+    background-color: #E9E0D3;
+    box-shadow: -2px 0 5px #efefef;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: right 0.3s ease;
+    z-index: 1001;
+}
+
+.gaveta-carrinho.aberto{
+    right: 0;
+}
+
+.rodape {
+    background-color: #E9E0D3;
+    color: #613003;
+    text-align: center;
+    padding: 10px;
+    margin-top: 50px;
+}
+
+
+#formulario{
+    text-align: center;
+    justify-content: center;
+    margin-top: 72px;
+    display: flex;
+    gap: 100px;
+}
+
+.campo{
+    text-align: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 3px solid #613003;
+    width: 250px;
+    position: sticky;
+    margin-top: 10px;
+}
+
+#formulario div{
+     justify-content: center;
+}
+
+.envolver-formulario1{
+    border: 3px solid #613003;
+    border-radius: 10px;
+    height: 100px;
+    max-height: 1000px;
+    align-items: center;
+    justify-content: center;
+    padding: auto;
+}/*Tive que separa os dois envolver formulario, pis quando colocava os dois dava conflito*/
+
+.envolver-formulario2{
+    border: 3px solid #613003;
+    border-radius: 10px;
+    min-height: 100px;
+    max-height: 1000px;
+    align-items: center;
+    justify-content: center;
+    padding: auto;
+}
+
+.descricao-cadastro{
+    text-align: center;
+    justify-content: center;
+}
+
+.btn-remover{
+    margin-left:10px;
+    max-height: 20px;
+    top: 20px;
+    right: 20px;
+    background-color: #613003;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}/*Essa classe descreve os botoes criados pelo script*/
