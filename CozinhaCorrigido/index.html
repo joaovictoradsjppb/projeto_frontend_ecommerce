@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozinha Moderna</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <div class="container1">
+      <div>
+        <h1 class="titulo">Cozinha Moderna</h1>
+      </div>
+      <nav class="container2">
+        <div>
+          <a href="index.html" class="menu">INICIO</a>
+        </div>
+        <div class="menu-suspenso">
+          <a href="#produtos" class="menu">PRODUTOS</a>
+          <ul class="lista-links">
+            <li><a href="#geladeira">GELADEIRA</a></li>
+            <li><a href="#airfryer">AIRFRYER</a></li>
+            <li><a href="#fogao">FOGÃO</a></li>
+          </ul>
+        </div>
+        <div>
+          <a href="cadastro.html" class="menu">ENTRAR/CADASTRAR</a>
+        </div>
+      </nav>
+      <div class="container3">
+        <div>
+          <button type="button" class="botao" onclick="alternarCarrinho()">
+            CARRINHO
+            <span id="contador">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container4" id="produtos">
+      <div class="produto" id="geladeira">
+        <h3 class="titulo">GELADEIRA</h3>
+        <ul>
+          <li><img src="geladeira.png" width="200" alt="Geladeira"></li>
+          <li><button type="button" onclick="adicionarItem('GELADEIRA')" class="btn-prod">Adicionar ao Carrinho</button></li>
+          <li><button type="button" class="btn-prod" onclick="mostrarGeladeira()">MOSTRAR PRODUTO</button></li>
+          <li><s class="preco-antigo">Preço antigo: R$2.300,00</s></li>
+          <li>Preço promocional: R$2.000,00</li>
+        </ul>
+      </div>
+
+      <div class="produto" id="airfryer">
+        <h3 class="titulo">AIRFRYER</h3>
+        <ul>
+          <li><img src="airfryer.png" width="200" alt="Airfryer"></li>
+          <li><button type="button" onclick="adicionarItem('AIRFRYER')" class="btn-prod">Adicionar ao Carrinho</button></li>
+          <li><button type="button" class="btn-prod" onclick="mostrarAirfryer()">MOSTRAR PRODUTO</button></li>
+          <li><s class="preco-antigo">Preço antigo: R$450,00</s></li>
+          <li>Preço promocional: R$400,00</li>
+        </ul>
+      </div>
+
+      <div class="produto" id="fogao">
+        <h3 class="titulo">FOGÃO</h3>
+        <ul>
+          <li><img src="fogao.png" width="200" alt="Fogão"></li>
+          <li><button type="button" onclick="adicionarItem('FOGÃO')" class="btn-prod">Adicionar ao Carrinho</button></li>
+          <li><button type="button" class="btn-prod" onclick="mostrarFogao()">MOSTRAR PRODUTO</button></li>
+          <li><s class="preco-antigo">Preço antigo: R$1.100,00</s></li>
+          <li>Preço promocional: R$950,00</li>
+        </ul>
+      </div>
+    </section>
+
+    <div id="area-tabelageladeira" class="tabela">
+      <h2 class="titulo">GELADEIRA
+        <button type="button" onclick="mostrarGeladeira()" class="botao">SAIR</button>
+      </h2>
+      <img src="geladeira.png" width="200" alt="Geladeira">
+      <div class="descricao">
+        <ul>
+          <li>Capacidade: 400 Litros<hr></li>
+          <li>Peso: 100Kg<hr></li>
+          <li>220 Volts<hr></li>
+          <li><s class="preco-antigo">Preço antigo: R$2.300,00</s><hr></li>
+          <li>Preço promocional: R$2.000,00</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="area-tabelafogao" class="tabela">
+      <h2 class="titulo">FOGÃO
+        <button type="button" onclick="mostrarFogao()" class="botao">SAIR</button>
+      </h2>
+      <img src="fogao.png" width="200" alt="Fogão">
+      <div class="descricao">
+        <ul>
+          <li>Peso: 6Kg<hr></li>
+          <li>220 Volts<hr></li>
+          <li>400 Watts<hr></li>
+          <li><s class="preco-antigo">Preço antigo: R$1.100,00</s><hr></li>
+          <li>Preço promocional: R$950,00</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="area-tabelaairfryer" class="tabela">
+      <h2 class="titulo">AIRFRYER
+        <button type="button" onclick="mostrarAirfryer()" class="botao">SAIR</button>
+      </h2>
+      <img src="airfryer.png" width="200" alt="Airfryer">
+      <div class="descricao">
+        <ul>
+          <li>Peso: 4Kg<hr></li>
+          <li>4 Litros<hr></li>
+          <li>110/220 Volts<hr></li>
+          <li><s class="preco-antigo">Preço antigo: R$450,00</s><hr></li>
+          <li>Preço promocional: R$400,00</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="area-carrinho" class="gaveta-carrinho">
+      <button type="button" onclick="alternarCarrinho()" class="botao">X</button>
+      <h2 class="titulo">Itens Comprados</h2>
+      <ul id="lista-itens"></ul>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <p>&copy; 2026 Cozinha Moderna, Todos os direitos reservados.</p>
+  </footer>
+</body>
+
+</html>

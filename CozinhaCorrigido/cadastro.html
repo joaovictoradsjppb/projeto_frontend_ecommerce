@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastre-se | Cozinha Moderna</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="cadastro.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <div class="container1">
+      <div>
+        <h1 class="titulo">Cozinha Moderna</h1>
+      </div>
+      <nav class="container2">
+        <div>
+          <a href="index.html" class="menu">INICIO</a>
+        </div>
+        <div class="menu-suspenso">
+          <a href="index.html#produtos" class="menu">PRODUTOS</a>
+          <ul class="lista-links">
+            <li><a href="index.html#geladeira">GELADEIRA</a></li>
+            <li><a href="index.html#airfryer">AIRFRYER</a></li>
+            <li><a href="index.html#fogao">FOGÃO</a></li>
+          </ul>
+        </div>
+        <div>
+          <a href="cadastro.html" class="menu">ENTRAR/CADASTRAR</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="descricao-cadastro">
+    <h2>Aproveite nossas ofertas entrando na sua conta</h2>
+    <h3>Ou faça seu cadastro e torne-se nosso cliente.</h3>
+  </section>
+
+  <main id="formulario">
+    <!-- LOGIN -->
+    <div class="envolver-formulario1">
+      <form onsubmit="event.preventDefault(); alert('Você entrou!');">
+        <div>
+          <input type="text" id="nome-login" class="campo" placeholder="Nome" aria-label="Nome"
+            autocomplete="username" required>
+        </div>
+
+        <div>
+          <input type="password" id="senha-login" class="campo" placeholder="Senha" aria-label="Senha"
+            autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="btn-prod">Entrar</button>
+      </form>
+    </div>
+
+    <!-- CADASTRO -->
+    <div class="envolver-formulario2">
+      <form onsubmit="event.preventDefault(); alert('Cadastro realizado com sucesso!');">
+        <div>
+          <label for="nome">Nome completo</label><br>
+          <input type="text" id="nome" class="campo" placeholder="Nome" autocomplete="name" required>
+        </div>
+
+        <div>
+          <label for="email">E-mail</label><br>
+          <input type="email" id="email" class="campo" placeholder="E-mail" autocomplete="email" required>
+        </div>
+
+        <div>
+          <div>
+            <label for="cpf">CPF</label><br>
+            <input class="campo" type="text" id="cpf" placeholder="000.000.000-00" maxlength="14"
+              inputmode="numeric" required>
+          </div>
+          <div>
+            <label for="telefone">Telefone</label><br>
+            <input class="campo" type="tel" id="telefone" placeholder="(83) 90000-0000" maxlength="15"
+              inputmode="numeric" autocomplete="tel" required>
+          </div>
+        </div>
+
+        <div>
+          <div>
+            <label for="senha">Senha</label><br>
+            <input class="campo" type="password" id="senha" autocomplete="new-password" required>
+          </div>
+          <div>
+            <label for="senha2">Confirmar senha</label><br>
+            <input class="campo" type="password" id="senha2" autocomplete="new-password" required>
+          </div>
+        </div>
+
+        <div>
+          <label><input type="checkbox" id="termos" required> Aceito os termos de uso</label><br>
+          <button type="submit" class="btn-prod" id="cadastro">Cadastrar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <p>&copy; 2026 Cozinha Moderna. Todos os direitos reservados.</p>
+  </footer>
+</body>
+
+</html>
